@@ -6,7 +6,22 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<SignAssembly>False</SignAssembly>
+		<AssemblyOriginatorKeyFile>C:\Users\zoxi\source\repos\Notechat\keyPair.snk</AssemblyOriginatorKeyFile>
+		<PackageIcon>Windows_Notepad_Icon.png</PackageIcon>
+		<ApplicationIcon>Windows_Notepad_Icon.ico</ApplicationIcon>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="Windows_Notepad_Icon.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\..\..\Desktop\Windows_Notepad_Icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="SocketIOClient" Version="3.0.6" />
