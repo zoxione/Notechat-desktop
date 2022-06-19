@@ -73,6 +73,7 @@
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -360,12 +361,14 @@
             this.посмотретьСправкуToolStripMenuItem.Name = "посмотретьСправкуToolStripMenuItem";
             this.посмотретьСправкуToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.посмотретьСправкуToolStripMenuItem.Text = "Посмотреть справку";
+            this.посмотретьСправкуToolStripMenuItem.Click += new System.EventHandler(this.посмотретьСправкуToolStripMenuItem_Click);
             // 
             // оставитьОтзывToolStripMenuItem
             // 
             this.оставитьОтзывToolStripMenuItem.Name = "оставитьОтзывToolStripMenuItem";
             this.оставитьОтзывToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.оставитьОтзывToolStripMenuItem.Text = "Оставить отзыв";
+            this.оставитьОтзывToolStripMenuItem.Click += new System.EventHandler(this.оставитьОтзывToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -398,39 +401,52 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel4,
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel3});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 425);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 423);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(800, 24);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.AutoSize = false;
+            this.toolStripStatusLabel4.MergeIndex = 1;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(599, 19);
+            this.toolStripStatusLabel4.Spring = true;
+            // 
             // toolStripStatusLabel1
             // 
+            this.toolStripStatusLabel1.AutoSize = false;
+            this.toolStripStatusLabel1.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.toolStripStatusLabel1.MergeIndex = 1;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(261, 17);
-            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(64, 19);
             this.toolStripStatusLabel1.Text = "0";
             // 
             // toolStripStatusLabel2
             // 
+            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.toolStripStatusLabel2.MergeIndex = 1;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(261, 17);
-            this.toolStripStatusLabel2.Spring = true;
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // toolStripStatusLabel3
             // 
+            this.toolStripStatusLabel3.MergeIndex = 1;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(261, 17);
-            this.toolStripStatusLabel3.Spring = true;
-            this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(0, 19);
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Location = new System.Drawing.Point(0, 21);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(798, 2);
@@ -509,5 +525,6 @@
         private ToolStripMenuItem подключитьсяКСерверуToolStripMenuItem;
         private FolderBrowserDialog folderBrowserDialog1;
         private Panel panel1;
+        private ToolStripStatusLabel toolStripStatusLabel4;
     }
 }

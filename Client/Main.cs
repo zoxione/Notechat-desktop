@@ -143,9 +143,7 @@ namespace Client
                 return;
             }
             
-            string tempIp = ip.Substring(7);
-            tempIp = tempIp.Substring(0, tempIp.Length - 1);
-            toolStripStatusLabel2.Text = tempIp;
+            toolStripStatusLabel2.Text = ip;
         }
 
 
@@ -154,9 +152,10 @@ namespace Client
             string text = richTextBox.Text;
 
             if (text == textRichTextBox)
-            {
                 return;
-            }
+
+            if (offlineMode == true)
+                return;
 
             client.EmitAsync("message", richTextBox.Text);
 
@@ -193,6 +192,16 @@ namespace Client
             ip = "http://127.0.0.1:3000/";
 
             Connect();
+        }
+
+        private void ïîñìîòğåòüÑïğàâêóToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/zoxione/Notechat-desktop");
+        }
+
+        private void îñòàâèòüÎòçûâToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/zoxione/Notechat-desktop/issues");
         }
     }
 }

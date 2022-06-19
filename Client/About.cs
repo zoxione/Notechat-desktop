@@ -16,10 +16,16 @@ namespace Client
         {
             InitializeComponent();
 
-            main_label.Text = "Как жизнь" + "\r" + "молодая?";
+            //main_label.Text = "Как жизнь" + "\r" + "молодая?";
+            label2.Text = Application.ProductVersion.ToString();
         }
 
         private void About_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
