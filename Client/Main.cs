@@ -18,6 +18,8 @@ namespace Client
 
         public Main()
         {
+            Form.CheckForIllegalCrossThreadCalls = false; // Безумный костыль для исправления ошибки когда мы не можем с потока изменять текст в RichTextBox, лучше найти норм решение на сайте
+                                                          // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-make-thread-safe-calls-to-windows-forms-controls?view=netframeworkdesktop-4.8
             InitializeComponent();
 
             Connect();
@@ -122,7 +124,16 @@ namespace Client
             await client.ConnectAsync();
         }
 
+        // TODO: сравнения текста в текстбоксе и нахождение новых измненеий, чтобы отправлять на сервер не все сразу, а только измненную часть
+        void processText()
+        {
+            string oldText = textRichTextBox;
+            string newText = richTextBox.Text;
 
+
+        }
+
+        // Лейбл с кол-вом юзеров
         void updateToolStripStatusLabel1()
         {
             toolStripStatusLabel1.Text = users.Count.ToString();
@@ -135,6 +146,7 @@ namespace Client
 
             toolStripStatusLabel1.ToolTipText = temp;
         }
+        // Лейбл с адресом сервера
         void updateToolStripStatusLabel2()
         {
             if (offlineMode == true) 
@@ -149,6 +161,11 @@ namespace Client
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
+            //int i = richTextBox.SelectionStart;
+            Console.WriteLine(i);
+            //Console.WriteLine(richTextBox.Text.IndexOf(richTextBox.Text,i-1));
+            Console.WriteLine(e.ToString());
+            //processText();
             string text = richTextBox.Text;
 
             if (text == textRichTextBox)
