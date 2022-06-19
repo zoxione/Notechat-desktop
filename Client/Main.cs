@@ -11,7 +11,7 @@ namespace Client
     {
         SocketIO client;
         List<User> users;
-        string textRichTextBox;
+        string globalText;
         string localText;
         string ip = "https://notechat-server.herokuapp.com/" ;
         bool offlineMode = false;
@@ -19,11 +19,13 @@ namespace Client
 
         public Main()
         {
-            Form.CheckForIllegalCrossThreadCalls = false; // Безумный костыль для исправления ошибки когда мы не можем с потока изменять текст в RichTextBox, лучше найти норм решение на сайте
+            Form.CheckForIllegalCrossThreadCalls = false; // Безумный костыль для исправления ошибки когда мы не можем с потока изменять текст в textBox1, лучше найти норм решение на сайте
                                                           // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-make-thread-safe-calls-to-windows-forms-controls?view=netframeworkdesktop-4.8
             InitializeComponent();
 
             Connect("doc");
+
+            
         }
 
         void Connect(string room = "doc") 
@@ -44,10 +46,10 @@ namespace Client
                 }
             };
 
-            client = new SocketIO(ip, options);
-
             try
             {
+                client = new SocketIO(ip, options);
+
                 Thread ThreadConnect = new Thread(Listen);
                 ThreadConnect.Start();
             }
@@ -114,7 +116,7 @@ namespace Client
 
                 string text = response.GetValue<string>();
 
-                richTextBox.Text = text;
+                textBox1.Text = text;
             });
 
             client.On("message", response =>
@@ -124,8 +126,8 @@ namespace Client
 
                 string text = response.GetValue<string>();
 
-                textRichTextBox = text;
-                richTextBox.Text = text;
+                globalText = text;
+                textBox1.Text = text;
             });
 
             client.OnConnected += async (sender, e) =>
@@ -144,8 +146,8 @@ namespace Client
         // TODO: сравнения текста в текстбоксе и нахождение новых измненеий, чтобы отправлять на сервер не все сразу, а только измненную часть
         void processText()
         {
-            string oldText = textRichTextBox;
-            string newText = richTextBox.Text;
+            string oldText = globalText;
+            string newText = textBox1.Text;
 
 
         }
@@ -186,12 +188,12 @@ namespace Client
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
-            //int i = richTextBox.SelectionStart;
+            //int i = textBox1.SelectionStart;
             //Console.WriteLine(i);
-            //Console.WriteLine(richTextBox.Text.IndexOf(richTextBox.Text,i-1));
+            //Console.WriteLine(textBox1.Text.IndexOf(textBox1.Text,i-1));
             //Console.WriteLine(e.ToString());
             //processText();
-            string text = richTextBox.Text;
+            string text = textBox1.Text;
 
             if (offlineMode == true)
             {
@@ -199,12 +201,12 @@ namespace Client
                 return;
             }
 
-            if (text == textRichTextBox)
+            if (text == globalText)
                 return;
 
-            client.EmitAsync("message", richTextBox.Text);
+            client.EmitAsync("message", textBox1.Text);
 
-            textRichTextBox = text;
+            globalText = text;
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -225,8 +227,16 @@ namespace Client
 
         private void подключитьсяКСерверуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ip = richTextBox.Text;
-            Connect("doc");
+            try
+            {
+                ip = textBox1.Text;
+                Connect("doc");
+            }
+            catch (Exception)
+            {
+                // TODO: показывать юзеру ошибку
+            }
+            
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
@@ -252,15 +262,15 @@ namespace Client
         {
             if(client.Connected)
                 client.DisconnectAsync();
-            string room = richTextBox.Text;
-            textRichTextBox = "";
+            string room = textBox1.Text;
+            globalText = "";
             Connect(room);
         }
 
         private void новоеОкноToolStripMenuItem_Click(object sender, EventArgs e)
         {
             client.DisconnectAsync();
-            textRichTextBox = "";
+            globalText = "";
             Connect("doc");
         }
 
@@ -273,13 +283,13 @@ namespace Client
                 {
                     
                     offlineMode = true;
-                    richTextBox.Text = localText;
+                    textBox1.Text = localText;
                 }
                 else
                 {
-                    localText = richTextBox.Text;
+                    localText = textBox1.Text;
                     offlineMode = false;
-                    richTextBox.Text = textRichTextBox;
+                    textBox1.Text = globalText;
                 }
                 updateToolStripStatusLabel3();
             }

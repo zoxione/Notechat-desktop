@@ -71,7 +71,6 @@
             this.оставитьОтзывToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -79,7 +78,7 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -385,23 +384,6 @@
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
-            // richTextBox
-            // 
-            this.richTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox.DetectUrls = false;
-            this.richTextBox.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.richTextBox.Location = new System.Drawing.Point(0, 24);
-            this.richTextBox.Name = "richTextBox";
-            this.richTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.richTextBox.Size = new System.Drawing.Size(800, 398);
-            this.richTextBox.TabIndex = 1;
-            this.richTextBox.Text = "";
-            this.richTextBox.TextChanged += new System.EventHandler(this.richTextBox_TextChanged);
-            this.richTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -447,23 +429,30 @@
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(0, 19);
             // 
-            // panel1
+            // textBox1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(0, 21);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(798, 2);
-            this.panel1.TabIndex = 3;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBox1.Location = new System.Drawing.Point(0, 26);
+            this.textBox1.MaxLength = 2147483647;
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox1.Size = new System.Drawing.Size(800, 396);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.TextChanged += new System.EventHandler(this.richTextBox_TextChanged);
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 447);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.richTextBox);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -484,7 +473,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem правкаToolStripMenuItem;
-        private RichTextBox richTextBox;
         private ToolStripMenuItem форматToolStripMenuItem;
         private ToolStripMenuItem переносПоСловамToolStripMenuItem;
         private ToolStripMenuItem шрифтToolStripMenuItem;
@@ -529,7 +517,7 @@
         private ToolTip toolTip1;
         private ToolStripMenuItem подключитьсяКСерверуToolStripMenuItem;
         private FolderBrowserDialog folderBrowserDialog1;
-        private Panel panel1;
         private ToolStripStatusLabel toolStripStatusLabel4;
+        private TextBox textBox1;
     }
 }
