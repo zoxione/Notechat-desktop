@@ -47,7 +47,7 @@ jobs:
 
     # Build
     - name: Build the application
-      run: msbuild Client\Client.csproj /p:Configuration=$env:Configuration /p:OutDir=build
+      run: dotnet publish -o build /p:Configuration=$env:Configuration /p:PublishSingleFile=false /p:IncludeNativeLibrariesForSelfExtract=false 
       env:
         Configuration: ${{ matrix.configuration }}
 
@@ -57,4 +57,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: exe Package
-        path: Client\build\
+        path: build
