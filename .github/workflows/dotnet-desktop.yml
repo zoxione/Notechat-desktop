@@ -47,7 +47,7 @@ jobs:
 
     # Build
     - name: Build the application
-      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:OutDir=build
+      run: msbuild Client\Client.csproj /p:Configuration=$env:Configuration /p:OutDir=build
       env:
         Configuration: ${{ matrix.configuration }}
 

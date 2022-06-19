@@ -8,7 +8,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SignAssembly>False</SignAssembly>
 		<AssemblyOriginatorKeyFile>C:\Users\zoxi\source\repos\Notechat\keyPair.snk</AssemblyOriginatorKeyFile>
-		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<PublishSingleFile>true</PublishSingleFile>
 		<PackageIcon>Windows_Notepad_Icon.png</PackageIcon>
 		<ApplicationIcon>Windows_Notepad_Icon.ico</ApplicationIcon>
 	</PropertyGroup>
