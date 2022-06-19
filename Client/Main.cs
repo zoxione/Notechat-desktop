@@ -162,9 +162,9 @@ namespace Client
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
             //int i = richTextBox.SelectionStart;
-            Console.WriteLine(i);
+            //Console.WriteLine(i);
             //Console.WriteLine(richTextBox.Text.IndexOf(richTextBox.Text,i-1));
-            Console.WriteLine(e.ToString());
+            //Console.WriteLine(e.ToString());
             //processText();
             string text = richTextBox.Text;
 
