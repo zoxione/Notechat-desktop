@@ -35,6 +35,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(36, 215);
+            this.label3.Location = new System.Drawing.Point(36, 257);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(230, 15);
             this.label3.TabIndex = 0;
@@ -77,6 +78,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_Click);
             // 
             // panel1
             // 
@@ -100,6 +102,16 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Notechat";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(36, 203);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(25, 15);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "ссс";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
             // Сведения
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -108,6 +120,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
@@ -134,5 +147,6 @@
         private PictureBox pictureBox1;
         private Panel panel1;
         private Label label4;
+        private Label label5;
     }
 }

@@ -17,17 +17,34 @@ namespace Client
             InitializeComponent();
 
             //main_label.Text = "Как жизнь" + "\r" + "молодая?";
-            label2.Text = Application.ProductVersion.ToString();
+            label2.Text = "Version: "+Application.ProductVersion.ToString();
         }
 
-        private void About_Load(object sender, EventArgs e)
+        private async void About_Load(object sender, EventArgs e)
         {
+            // Получение актуальной версии приложения
+            using var client = new HttpClient();
+            var content = await client.GetStringAsync("https://notechat-server.herokuapp.com/version/clientdesktop");
+
+            if(content != null && content != Application.ProductVersion.ToString())
+                label5.Text = "Последняя версия: "+content+"\nНадо бы обновиться";
 
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Пасхалка
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            label1.Text = "Оаооаоаоамммммм";
         }
     }
 }

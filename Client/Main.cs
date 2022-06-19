@@ -12,9 +12,9 @@ namespace Client
         SocketIO client;
         List<User> users;
         string textRichTextBox;
-        string ip = "https://notechat-server.herokuapp.com/";
+        string ip = "https://notechat-server.herokuapp.com/" ;
         bool offlineMode = false;
-        string room = "doc";
+        //string room = "doc";
 
         public Main()
         {
@@ -22,14 +22,28 @@ namespace Client
                                                           // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-make-thread-safe-calls-to-windows-forms-controls?view=netframeworkdesktop-4.8
             InitializeComponent();
 
-            Connect();
+            Connect("doc");
         }
 
-        void Connect() 
+        void Connect(string room = "doc") 
         {
-            string localip = ip;
 
-            client = new SocketIO(ip);
+            if(room != "doc")
+                this.Text = room+" - Áëîêíîò";
+            else
+               this.Text = " Áëîêíîò";
+
+            var options = new SocketIOOptions
+            {
+                Query = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("token", "abc123"), // todo
+                    new KeyValuePair<string, string>("client", "notechatdesktop"),
+                    new KeyValuePair<string, string>("room", room)
+                }
+            };
+
+            client = new SocketIO(ip, options);
 
             try
             {
@@ -198,27 +212,41 @@ namespace Client
         private void ïîäêëş÷èòüñÿÊÑåğâåğóToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ip = richTextBox.Text;
-
-            Connect();
+            Connect("doc");
         }
 
         private void âûõîäToolStripMenuItem_Click(object sender, EventArgs e)
         {
             offlineMode = true;
+            client.DisconnectAsync();
+            //ip = "http://127.0.0.1:3000/";
 
-            ip = "http://127.0.0.1:3000/";
-
-            Connect();
+            //Connect();
         }
 
         private void ïîñìîòğåòüÑïğàâêóToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/zoxione/Notechat-desktop");
+            System.Diagnostics.Process.Start("explorer", "https://github.com/zoxione/Notechat-desktop");
         }
 
         private void îñòàâèòüÎòçûâToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/zoxione/Notechat-desktop/issues");
+            System.Diagnostics.Process.Start("explorer", "https://github.com/zoxione/Notechat-desktop/issues");
+        }
+
+        private void ñîçäàòüToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            client.DisconnectAsync();
+            string room = richTextBox.Text;
+            textRichTextBox = "";
+            Connect(room);
+        }
+
+        private void íîâîåÎêíîToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            client.DisconnectAsync();
+            textRichTextBox = "";
+            Connect("doc");
         }
     }
 }
