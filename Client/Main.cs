@@ -12,6 +12,7 @@ namespace Client
         SocketIO client;
         List<User> users;
         string textRichTextBox;
+        string localText;
         string ip = "https://notechat-server.herokuapp.com/" ;
         bool offlineMode = false;
         //string room = "doc";
@@ -70,6 +71,7 @@ namespace Client
             }
 
             updateToolStripStatusLabel2();
+            updateToolStripStatusLabel3();
         }
 
         async private void Listen()
@@ -117,7 +119,8 @@ namespace Client
 
             client.On("message", response =>
             {
-                Console.WriteLine(response);
+                if (offlineMode)
+                    return;
 
                 string text = response.GetValue<string>();
 
@@ -172,6 +175,14 @@ namespace Client
             toolStripStatusLabel2.Text = ip;
         }
 
+        void updateToolStripStatusLabel3()
+        {
+            if (offlineMode == true)
+                toolStripStatusLabel3.Text = "Offline";
+            else
+                toolStripStatusLabel3.Text = "";
+        }
+
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -182,10 +193,13 @@ namespace Client
             //processText();
             string text = richTextBox.Text;
 
-            if (text == textRichTextBox)
-                return;
-
             if (offlineMode == true)
+            {
+                localText = text;
+                return;
+            }
+
+            if (text == textRichTextBox)
                 return;
 
             client.EmitAsync("message", richTextBox.Text);
@@ -236,7 +250,8 @@ namespace Client
 
         private void ñîçäàòüToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            client.DisconnectAsync();
+            if(client.Connected)
+                client.DisconnectAsync();
             string room = richTextBox.Text;
             textRichTextBox = "";
             Connect(room);
@@ -247,6 +262,28 @@ namespace Client
             client.DisconnectAsync();
             textRichTextBox = "";
             Connect("doc");
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+           
+            if (e.KeyCode == Keys.F1 )
+            {
+                if (offlineMode == false)
+                {
+                    
+                    offlineMode = true;
+                    richTextBox.Text = localText;
+                }
+                else
+                {
+                    localText = richTextBox.Text;
+                    offlineMode = false;
+                    richTextBox.Text = textRichTextBox;
+                }
+                updateToolStripStatusLabel3();
+            }
+               
         }
     }
 }
