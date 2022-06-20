@@ -13,8 +13,10 @@ namespace Client
         List<User> users;
         string globalText;
         string localText;
-        string ip = "https://notechat-server.herokuapp.com/" ;
+        //string ip = "https://notechat-server.herokuapp.com/" ; // 
+        string ip = "http://localhost:3000/";
         bool offlineMode = false;
+        Session session = new Session();
         //string room = "doc";
 
         public Main()
@@ -24,8 +26,6 @@ namespace Client
             InitializeComponent();
 
             Connect("doc");
-
-            
         }
 
         void Connect(string room = "doc") 
@@ -36,13 +36,20 @@ namespace Client
             else
                this.Text = " Блокнот";
 
+            // Restore last sessionID from properties
+            session.sessionID = Properties.Settings.Default.SessionID;
+
             var options = new SocketIOOptions
             {
                 Query = new List<KeyValuePair<string, string>>
                 {
-                    new KeyValuePair<string, string>("token", "abc123"), // todo
-                    new KeyValuePair<string, string>("client", "notechatdesktop"),
                     new KeyValuePair<string, string>("room", room)
+                },
+                Auth = new Dictionary<string, string>
+                {
+                    {"sessionID", session.sessionID},
+                    {"client", "notechatdesktop"},
+                    {"appToken", "abc123"} // todo
                 }
             };
 
@@ -88,6 +95,14 @@ namespace Client
                 updateToolStripStatusLabel1();
             });
 
+            client.On("session", response =>
+            {
+                session = response.GetValue<Session>();
+                Properties.Settings.Default.SessionID = session.sessionID;
+                // TODO: save user id and other data
+                Properties.Settings.Default.Save();
+            });
+
             client.On("users", response =>
             {
                 Console.WriteLine(response);
@@ -97,7 +112,6 @@ namespace Client
                 Console.WriteLine(users);
 
                 updateToolStripStatusLabel1();
-
             });
 
             client.On("user_disconnected", response =>

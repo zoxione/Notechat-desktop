@@ -11,4 +11,10 @@ namespace Client
         public string userID { get; set; }
 
     }
+
+    public class Session
+    {
+        public string sessionID { get; set; }
+        public string userID { get; set; }
+    }
 }
