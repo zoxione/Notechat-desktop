@@ -29,7 +29,8 @@ namespace Client
 
                 if (content != null && content != Application.ProductVersion.ToString())
                     label5.Text = "Последняя версия: " + content + "\nНадо бы обновиться";
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -49,9 +50,8 @@ namespace Client
         // Пасхалка
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            label1.Text = "Оаооаоаоамммммм";
             label4.Text = "Таганрог";
-            pictureBox1.Load("https://s0.rbk.ru/v6_top_pics/media/img/2/84/754598886185842.jpeg");
+            pictureBox1.Load("https://c.tenor.com/2roX3uxz_68AAAAM/cat-space.gif");
         }
     }
 }

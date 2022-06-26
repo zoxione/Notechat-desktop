@@ -5,12 +5,17 @@ namespace Client
 {
     public partial class Main : Form
     {
-        Storage _clientStorage = new Storage();             // client and client data
+        private Storage _clientStorage;             // client and client data
+        private FontDialog _fontDialog;             // font dialog for textbox
 
         public Main()
         {
             Form.CheckForIllegalCrossThreadCalls = false;   // Безумный костыль для исправления ошибки когда мы не можем с потока изменять текст в textBox1, лучше найти норм решение на сайте
                                                             // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-make-thread-safe-calls-to-windows-forms-controls?view=netframeworkdesktop-4.8
+
+            _clientStorage = new Storage();
+            _fontDialog = new FontDialog();
+
             InitializeComponent();
 
             Connect("doc");
@@ -50,6 +55,7 @@ namespace Client
             catch (Exception ex)
             {
                 _clientStorage.OfflineMode = true;
+                Console.WriteLine(ex.ToString());
             }
 
             while (true)
@@ -308,6 +314,28 @@ namespace Client
                 updateToolStripStatusLabel3();
             }
                
+        }
+
+                // Вкладка Формат
+        private void шрифтToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_fontDialog.ShowDialog() == DialogResult.OK)
+            { 
+               textBox1.Font = _fontDialog.Font;
+            }
+        }
+
+        private void переносПоСловамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.WordWrap = !textBox1.WordWrap;
+            переносПоСловамToolStripMenuItem.Checked = textBox1.WordWrap;
+        }
+
+                // Вкладка Вид
+        private void строкаСостоянияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            statusStrip1.Visible = !statusStrip1.Visible;
+            строкаСостоянияToolStripMenuItem.Checked = statusStrip1.Visible;
         }
     }
 }

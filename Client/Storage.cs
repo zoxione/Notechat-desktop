@@ -12,8 +12,8 @@ namespace Client
 
             // secondary data
         //public string Ip { get; set; } = "https://notechat-server.herokuapp.com/";
-        //public string Ip { get; set; } = "http://localhost:3000/";
-        public string Ip { get; set; } = "http://26.23.217.120:3000/";
+        public string Ip { get; set; } = "http://localhost:3000/";
+        //public string Ip { get; set; } = "http://26.23.217.120:3000/";
         public bool OfflineMode { get; set; } = false;
 
             // text data
