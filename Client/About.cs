@@ -16,7 +16,6 @@ namespace Client
         {
             InitializeComponent();
 
-            //main_label.Text = "Как жизнь" + "\r" + "молодая?";
             label2.Text = "Version: "+Application.ProductVersion.ToString();
         }
 

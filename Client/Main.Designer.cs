@@ -338,13 +338,13 @@
             // масштабToolStripMenuItem
             // 
             this.масштабToolStripMenuItem.Name = "масштабToolStripMenuItem";
-            this.масштабToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.масштабToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.масштабToolStripMenuItem.Text = "Масштаб";
             // 
             // строкаСостоянияToolStripMenuItem
             // 
             this.строкаСостоянияToolStripMenuItem.Name = "строкаСостоянияToolStripMenuItem";
-            this.строкаСостоянияToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.строкаСостоянияToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.строкаСостоянияToolStripMenuItem.Text = "Строка состояния";
             // 
             // справкаToolStripMenuItem
