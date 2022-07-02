@@ -18,24 +18,54 @@ namespace Client
 
             InitializeComponent();
 
-            Connect("doc");
+            Connect(_clientStorage.Ip, _clientStorage.Room);
+
+            updateToolStripStatusLabel2();
+            updateToolStripStatusLabel3();
+
+
+            //Properties.Settings.Default.IsWelcomeHide = true;
+            //Properties.Settings.Default.Save();
+
+            if (Properties.Settings.Default.IsWelcomeHide == false) 
+            {
+                var welcome = new Welcome();
+                welcome.Show();
+                welcome.StartPosition = FormStartPosition.CenterParent;
+            }
         }
 
-        void Connect(string room = "doc") 
+        void Connect(string server, string room)
         {
-            if(room != "doc")
-                this.Text = room+" - Блокнот";
-            else
-               this.Text = " Блокнот";
+                    // если есть подключение -> отключаем
+            if (_clientStorage.Client != null && _clientStorage.Client.Connected)
+            {
+                _clientStorage.Client.DisconnectAsync();
+            }
 
-            // Restore last sessionID from properties
+                    // Сохранение данных
+            _clientStorage.Ip = server;
+            _clientStorage.Room = room;
+
+                    // Название формы
+            if (_clientStorage.Room == "")
+            {
+                this.Text = "Блокнот";
+            }
+            else 
+            {
+                this.Text = _clientStorage.Room + " - Блокнот";
+            }
+
+                    // Restore last sessionID from properties
             _clientStorage.Session.sessionID = Properties.Settings.Default.SessionID;
 
+                    // Настройки подключения
             var options = new SocketIOOptions
             {
                 Query = new List<KeyValuePair<string, string>>
                 {
-                    new KeyValuePair<string, string>("room", room)
+                    new KeyValuePair<string, string>("room", _clientStorage.Room)
                 },
                 Auth = new Dictionary<string, string>
                 {
@@ -45,6 +75,7 @@ namespace Client
                 }
             };
 
+                    // Создание клиента и его подключение
             try
             {
                 _clientStorage.Client = new SocketIO(_clientStorage.Ip, options);
@@ -58,9 +89,10 @@ namespace Client
                 Console.WriteLine(ex.ToString());
             }
 
+                    // Цикл ожидания подключения
             while (true)
             {
-                if (_clientStorage.Client.Attempts > 1 && _clientStorage.Client.Disconnected)
+                if (_clientStorage.Client.Attempts >= 1 && _clientStorage.Client.Disconnected)
                 {
                     _clientStorage.OfflineMode = true;
                     break;
@@ -72,6 +104,7 @@ namespace Client
                 }
             }
 
+                    // Обновление лейблов
             updateToolStripStatusLabel2();
             updateToolStripStatusLabel3();
         }
@@ -160,7 +193,7 @@ namespace Client
             await _clientStorage.Client.ConnectAsync();
         }
 
-        // Лейбл с кол-вом юзеров
+                // Лейбл с кол-вом юзеров
         void updateToolStripStatusLabel1()
         {
             toolStripStatusLabel1.Text = _clientStorage.Users.Count.ToString();
@@ -174,35 +207,35 @@ namespace Client
             toolStripStatusLabel1.ToolTipText = temp;
         }
 
-        // Лейбл с адресом сервера
+                // Лейбл с адресом сервера
         void updateToolStripStatusLabel2()
         {
-            if (_clientStorage.OfflineMode == true) 
+            if (_clientStorage.Ip == "")
             {
                 toolStripStatusLabel2.Text = "offline";
-                return;
             }
-            
-            toolStripStatusLabel2.Text = _clientStorage.Ip;
+            else
+            {
+                toolStripStatusLabel2.Text = _clientStorage.Ip;
+            }
         }
 
+                // Лейбл с названием комнаты
         void updateToolStripStatusLabel3()
         {
             if (_clientStorage.OfflineMode == true)
-                toolStripStatusLabel3.Text = "Offline";
-            else
+            {
                 toolStripStatusLabel3.Text = "";
+            }
+            else
+            {
+                toolStripStatusLabel3.Text = _clientStorage.Room;
+            }  
         }
 
-        // Обработка при изменении текстбокса на 1 символ
+                // Обработка при изменении текстбокса на 1 символ
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
-            //int i = textBox1.SelectionStart;
-            //Console.WriteLine(i);
-            //Console.WriteLine(textBox1.Text.IndexOf(textBox1.Text,i-1));
-            //Console.WriteLine(e.ToString());
-            //processText();
-
             string text = textBox1.Text;
 
             if (_clientStorage.OfflineMode == true)
@@ -211,61 +244,83 @@ namespace Client
                 return;
             }
 
-            if (text == _clientStorage.OldText)
+            if (_clientStorage.OldText == text)
+            {
                 return;
+            }
+
+            if (_clientStorage.OldText == null)
+            {
+                _clientStorage.OldText = "";
+            }
 
             _clientStorage.CurrentText = text;
 
                     // Формирование и отправка патча
-            var dmp = DiffMatchPatchModule.Default;
-            var diffs = dmp.DiffMain(_clientStorage.OldText, _clientStorage.CurrentText);
-            var patchs = dmp.PatchMake(_clientStorage.OldText, diffs);
-            var tt = dmp.PatchToText(patchs);
+            var diffs = DiffMatchPatchModule.Default.DiffMain(_clientStorage.OldText, _clientStorage.CurrentText);
+            var patchs = DiffMatchPatchModule.Default.PatchMake(_clientStorage.OldText, diffs);
+            var tt = DiffMatchPatchModule.Default.PatchToText(patchs);
             _clientStorage.Client.EmitAsync("patch", tt);
 
             _clientStorage.OldText = _clientStorage.CurrentText;
         }
 
-        /*
-         * надо потом удалить
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+                // Подключиться к серверу
+        private void подключитьсяКСерверуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var connectServer = new ConnectServer(_clientStorage, Connect, updateToolStripStatusLabel2);
+            connectServer.ShowDialog();
         }
-       
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+
+                // Отключиться от сервера
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _clientStorage.OfflineMode = true;
+            _clientStorage.Client.DisconnectAsync();
 
+            //updateToolStripStatusLabel1();
+
+            _clientStorage.Ip = "";
+            updateToolStripStatusLabel2();
+            
+            _clientStorage.Room = "";
+            updateToolStripStatusLabel3();
+            
+            this.Text = "Блокнот";
+            textBox1.Text = "";
         }
-        */
+
+                // Создать файл
+        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var createRoom = new CreateRoom(_clientStorage, Connect);
+            createRoom.ShowDialog();
+        }
+
+                // Закрыть файл
+        private void новоеОкноToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_clientStorage.Room != "")
+            {
+                _clientStorage.OfflineMode = true;
+                _clientStorage.Client.DisconnectAsync();
+
+                updateToolStripStatusLabel1();
+
+                _clientStorage.Room = "";
+                updateToolStripStatusLabel3();
+
+                this.Text = "Блокнот";
+                textBox1.Text = "";
+
+                Connect(_clientStorage.Ip, _clientStorage.Room);
+            }
+        }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var about = new Сведения();
             about.ShowDialog();
-        }
-
-        private void подключитьсяКСерверуToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                _clientStorage.Ip = textBox1.Text;
-                Connect("doc");
-            }
-            catch (Exception)
-            {
-                // TODO: показывать юзеру ошибку
-            }
-            
-        }
-
-        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _clientStorage.OfflineMode = true;
-            _clientStorage.Client.DisconnectAsync();
-            //ip = "http://127.0.0.1:3000/";
-
-            //Connect();
         }
 
         private void посмотретьСправкуToolStripMenuItem_Click(object sender, EventArgs e)
@@ -278,26 +333,11 @@ namespace Client
             System.Diagnostics.Process.Start("explorer", "https://github.com/zoxione/Notechat-desktop/issues");
         }
 
-        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(_clientStorage.Client.Connected)
-                _clientStorage.Client.DisconnectAsync();
-            string room = textBox1.Text;
-            _clientStorage.OldText = "";
-            Connect(room);
-        }
-
-        private void новоеОкноToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _clientStorage.Client.DisconnectAsync();
-            _clientStorage.OldText = "";
-            Connect("doc");
-        }
-
+                // F1 мод
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-           
-            if (e.KeyCode == Keys.F1 )
+            /*
+            if (e.KeyCode == Keys.F1)
             {
                 if (_clientStorage.OfflineMode == false)
                 {
@@ -311,9 +351,9 @@ namespace Client
                     _clientStorage.OfflineMode = false;
                     textBox1.Text = _clientStorage.OldText;
                 }
-                updateToolStripStatusLabel3();
+                //updateToolStripStatusLabel3();
             }
-               
+            */
         }
 
                 // Вкладка Формат
@@ -336,6 +376,19 @@ namespace Client
         {
             statusStrip1.Visible = !statusStrip1.Visible;
             строкаСостоянияToolStripMenuItem.Checked = statusStrip1.Visible;
+        }
+       
+        
+                // Вкладка Правка
+        private void времяИДатаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dt = new DateTime();
+            textBox1.Text += dt;
+        }
+
+        private void выделитьВсеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Focus();
         }
     }
 }

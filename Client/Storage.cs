@@ -10,11 +10,13 @@ namespace Client
         public List<User> Users { get; set; }
         public Session Session { get; set; } = new Session();
 
-            // secondary data
+        // secondary data
         //public string Ip { get; set; } = "https://notechat-server.herokuapp.com/";
-        public string Ip { get; set; } = "http://localhost:3000/";
+        //public string Ip { get; set; } = "http://localhost:3000/";
         //public string Ip { get; set; } = "http://26.23.217.120:3000/";
-        public bool OfflineMode { get; set; } = false;
+        public string Ip { get; set; } = Properties.Settings.Default.Ip;
+        public string Room { get; set; } = "";
+        public bool OfflineMode { get; set; } = true;
 
             // text data
         public string OldText { get; set; } = "";

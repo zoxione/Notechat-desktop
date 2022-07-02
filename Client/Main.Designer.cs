@@ -123,14 +123,14 @@
             this.создатьToolStripMenuItem.Name = "создатьToolStripMenuItem";
             this.создатьToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.создатьToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.создатьToolStripMenuItem.Text = "Создать";
+            this.создатьToolStripMenuItem.Text = "Создать файл";
             this.создатьToolStripMenuItem.Click += new System.EventHandler(this.создатьToolStripMenuItem_Click);
             // 
             // новоеОкноToolStripMenuItem
             // 
             this.новоеОкноToolStripMenuItem.Name = "новоеОкноToolStripMenuItem";
             this.новоеОкноToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.новоеОкноToolStripMenuItem.Text = "Закрыть файл";
+            this.новоеОкноToolStripMenuItem.Text = "Закрыть";
             this.новоеОкноToolStripMenuItem.Click += new System.EventHandler(this.новоеОкноToolStripMenuItem_Click);
             // 
             // открытьToolStripMenuItem
@@ -298,12 +298,14 @@
             this.выделитьВсеToolStripMenuItem.Name = "выделитьВсеToolStripMenuItem";
             this.выделитьВсеToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.выделитьВсеToolStripMenuItem.Text = "Выделить все";
+            this.выделитьВсеToolStripMenuItem.Click += new System.EventHandler(this.выделитьВсеToolStripMenuItem_Click);
             // 
             // времяИДатаToolStripMenuItem
             // 
             this.времяИДатаToolStripMenuItem.Name = "времяИДатаToolStripMenuItem";
             this.времяИДатаToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.времяИДатаToolStripMenuItem.Text = "Время и дата";
+            this.времяИДатаToolStripMenuItem.Click += new System.EventHandler(this.времяИДатаToolStripMenuItem_Click);
             // 
             // форматToolStripMenuItem
             // 
@@ -342,7 +344,7 @@
             // масштабToolStripMenuItem
             // 
             this.масштабToolStripMenuItem.Name = "масштабToolStripMenuItem";
-            this.масштабToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.масштабToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.масштабToolStripMenuItem.Text = "Масштаб";
             // 
             // строкаСостоянияToolStripMenuItem
@@ -350,7 +352,7 @@
             this.строкаСостоянияToolStripMenuItem.Checked = true;
             this.строкаСостоянияToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.строкаСостоянияToolStripMenuItem.Name = "строкаСостоянияToolStripMenuItem";
-            this.строкаСостоянияToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.строкаСостоянияToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.строкаСостоянияToolStripMenuItem.Text = "Строка состояния";
             this.строкаСостоянияToolStripMenuItem.Click += new System.EventHandler(this.строкаСостоянияToolStripMenuItem_Click);
             // 
@@ -410,7 +412,7 @@
             this.toolStripStatusLabel4.AutoSize = false;
             this.toolStripStatusLabel4.MergeIndex = 1;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(599, 19);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(676, 19);
             this.toolStripStatusLabel4.Spring = true;
             // 
             // toolStripStatusLabel1
@@ -427,8 +429,8 @@
             this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.toolStripStatusLabel2.MergeIndex = 1;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
-            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(45, 19);
+            this.toolStripStatusLabel2.Text = "offline";
             // 
             // toolStripStatusLabel3
             // 
